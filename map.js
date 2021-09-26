@@ -1,4 +1,4 @@
-function getData(number, ii) {
+function getData(number, stnLocations) {
     let requestURL = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/' + number + '?Authorization=CWB-E4F1D002-A8D9-4D75-BD78-1225002ACF49&downloadType=WEB&format=JSON';
     // XMLHttpRequest：專門與伺服器連線的物件。
     let req = new XMLHttpRequest();
@@ -7,23 +7,12 @@ function getData(number, ii) {
     req.onload = function(e) {  // load事件，偵測連線的狀態結束
         // console.log(this.responseText);
         const data = JSON.parse(this.responseText);
-        exeMap(data, ii);
+        exeMap(data, stnLocations);
     };
 }
 
 
-function exeMap(data, ii) {
-    if (ii == 0){
-        var map = L.map('map', {
-            center: [24.9976, 121.4420],
-            zoom: 9
-        });
-        var tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        var stnLocations = new L.MarkerClusterGroup().addTo(map);
-    };
-
+function exeMap(data, stnLocations) {
     let stnData = data.cwbopendata.location;
     for (let i = 0; i < stnData.length; i++) {
         let lat = stnData[i].lat_wgs84;
@@ -52,12 +41,21 @@ function exeMap(data, ii) {
             '</html>'
         stnLocations.addLayer(L.marker([lat, lon]).bindPopup(info))
     }
-    map.addLayer(stnLocations);
 };
+
+
+var map = L.map('map', {
+    center: [24.9976, 121.4420],
+    zoom: 9
+});
+var tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+var stnLocations = new L.MarkerClusterGroup().addTo(map);
 
 number = ['O-A0001-001', 'O-A0003-001'];
 for (let i = 0; i < number.length; i++) {
-    console.log(i);
-    getData(number[i], i);
+    getData(number[i], stnLocations);
 }
+map.addLayer(stnLocations);
 // stnData = stnData.cwbopendata.location
