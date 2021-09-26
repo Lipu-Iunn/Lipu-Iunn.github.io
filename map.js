@@ -37,7 +37,7 @@ function exeMap(data, stnLocations) {
             '相對溼度： ' + rh + '<br>' + 
             '風向： ' + wd + '<br>' + 
             '風速： ' + ws + '<br>' +
-            '日累積雨量： ' + pp + '<br>'
+            '日累積雨量： ' + pp + '<br>' +
             '</html>'
         stnLocations.addLayer(L.marker([lat, lon]).bindPopup(info))
     }
