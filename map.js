@@ -1,5 +1,5 @@
 function getData(number, stnLocations) {
-    let requestURL = 'https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/' + number + '?Authorization=CWB-E4F1D002-A8D9-4D75-BD78-1225002ACF49&downloadType=WEB&format=JSON';
+    let requestURL = 'https://opendata.cwa.gov.tw/fileapi/v1/opendataapi/' + number + '?Authorization=CWB-E4F1D002-A8D9-4D75-BD78-1225002ACF49&downloadType=WEB&format=JSON';
     // XMLHttpRequest：專門與伺服器連線的物件。
     let req = new XMLHttpRequest();
     req.open('get', requestURL);
